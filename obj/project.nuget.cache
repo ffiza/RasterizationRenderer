@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "1dRXirPGbI8=",
+  "dgSpecHash": "x7VyI0fM8/omfh2Oc4EynX1u3xFL1zvq0BUHQIiKzCMjVHLCSzhE3dTP9x2pbUKwPXidMouVSoUuqActwYJkfQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\fedeg\\Documents\\Repositories\\RasterizationRenderer\\RasterizationRenderer.csproj",
+  "projectFilePath": "C:\\Users\\Usuario\\Documents\\Repositories\\RasterizationRenderer\\RasterizationRenderer.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\fedeg\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
-    "C:\\Users\\fedeg\\.nuget\\packages\\system.drawing.common\\6.0.0\\system.drawing.common.6.0.0.nupkg.sha512"
+    "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
+    "C:\\Users\\Usuario\\.nuget\\packages\\system.drawing.common\\6.0.0\\system.drawing.common.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }
