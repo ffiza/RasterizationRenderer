@@ -41,32 +41,30 @@ namespace RasterizationRenderer.Utils
 
         public void DrawLine(Vector2 p0, Vector2 p1, Color color)
         {
-            Vector2 v0 = p0;
-            Vector2 v1 = p1;
-            float dx = v1.X - v0.X;
-            float dy = v1.Y  - v0.Y;
+            float dx = p1.X - p0.X;
+            float dy = p1.Y  - p0.Y;
             if (MathF.Abs(dx) > MathF.Abs(dy))
             {
-                if (v0.X > v1.X)
+                if (p0.X > p1.X)
                 {
-                    (v1, v0) = Swap.SwapVector2(v0, v1);
+                    (p1, p0) = Swap.SwapVector2(p0, p1);
                 }
-                List<float> ys = Interpolator.Interpolate((int)v0.X, v0.Y, (int)v1.X, v1.Y);
-                for (int x = (int)v0.X; x <= v1.X; x++)
+                List<float> ys = Interpolator.Interpolate((int)p0.X, p0.Y, (int)p1.X, p1.Y);
+                for (int x = (int)p0.X; x <= p1.X; x++)
                 {
-                    PutPixel(x, ys[x - (int)v0.X], color);
+                    PutPixel(x, ys[x - (int)p0.X], color);
                 }
             }
             else
             {
-                if (v0.Y < v1.Y)
+                if (p0.Y < p1.Y)
                 {
-                    (v1, v0) = Swap.SwapVector2(v0, v1);
+                    (p1, p0) = Swap.SwapVector2(p0, p1);
                 }
-                List<float> xs = Interpolator.Interpolate((int)v0.Y, v0.X, (int)v1.Y, v1.X);
-                for (int y = (int)v0.Y; y <= v1.Y; y++)
+                List<float> xs = Interpolator.Interpolate((int)p0.Y, p0.X, (int)p1.Y, p1.X);
+                for (int y = (int)p0.Y; y <= p1.Y; y++)
                 {
-                    PutPixel(xs[y - (int)v0.Y], y, color);
+                    PutPixel(xs[y - (int)p0.Y], y, color);
                 }
             }
         }
