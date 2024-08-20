@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 using System.Numerics;
+using RasterizationRenderer.Utils;
 
 namespace RasterizationRenderer.Utils
 {
@@ -40,7 +41,6 @@ namespace RasterizationRenderer.Utils
 
         public void DrawLine(Vector2 p0, Vector2 p1, Color color)
         {
-            float a;
             Vector2 v0 = p0;
             Vector2 v1 = p1;
             float dx = v1.X - v0.X;
@@ -51,12 +51,10 @@ namespace RasterizationRenderer.Utils
                 {
                     (v1, v0) = Swap.SwapVector2(v0, v1);
                 }
-                a = dy / dx;
-                float y = v0.Y;
+                List<float> ys = Interpolator.Interpolate((int)v0.X, v0.Y, (int)v1.X, v1.Y);
                 for (int x = (int)v0.X; x <= v1.X; x++)
                 {
-                    PutPixel(x, y, color);
-                    y += a;
+                    PutPixel(x, ys[x - (int)v0.X], color);
                 }
             }
             else
@@ -65,12 +63,10 @@ namespace RasterizationRenderer.Utils
                 {
                     (v1, v0) = Swap.SwapVector2(v0, v1);
                 }
-                a = dx / dy;
-                float x = v0.X;
+                List<float> xs = Interpolator.Interpolate((int)v0.Y, v0.X, (int)v1.Y, v1.X);
                 for (int y = (int)v0.Y; y <= v1.Y; y++)
                 {
-                    PutPixel(x, y, color);
-                    x += a;
+                    PutPixel(xs[y - (int)v0.Y], y, color);
                 }
             }
         }
