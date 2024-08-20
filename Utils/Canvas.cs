@@ -18,16 +18,22 @@ namespace RasterizationRenderer.Utils
             _width = width;
             _height = height;
             _bmp = new Bitmap(width, height);
-            SetBackgroundColor(color);
+            Clear(color);
         }
 
-        private void SetBackgroundColor(Color color)
+        private void Clear(Color color)
         {
             Graphics g = Graphics.FromImage(_bmp);
             g.Clear(color);
         }
 
-        public void SaveToFile(string filename)
+        private void PutPixel(float x, float y, Color color)
+        {
+            (float newX, float newY) = Coordinates.CenterCoords(x, y, this);
+            _bmp.SetPixel((int)newX, (int)newY, color);
+        }
+
+        public void SaveToPNG(string filename)
         {
             if (File.Exists(filename))
             {
@@ -36,6 +42,11 @@ namespace RasterizationRenderer.Utils
             }
             _bmp.Save(filename, ImageFormat.Png);
             _bmp.Dispose();
+        }
+
+        public void DrawPoint(Vector2 p, Color color)
+        {
+            PutPixel(p.X, p.Y, color);
         }
 
         public void DrawLine(Vector2 p0, Vector2 p1, Color color)
@@ -115,12 +126,6 @@ namespace RasterizationRenderer.Utils
                     PutPixel(x, y, color);
                 }
             }
-        }
-
-        private void PutPixel(float x, float y, Color color)
-        {
-            (float newX, float newY) = Coordinates.CenterCoords(x, y, this);
-            _bmp.SetPixel((int)newX, (int)newY, color);
         }
     }
 }
