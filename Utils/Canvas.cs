@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 using System.Numerics;
-using RasterizationRenderer.Utils;
 
 namespace RasterizationRenderer.Utils
 {
@@ -72,6 +71,50 @@ namespace RasterizationRenderer.Utils
             DrawLine(p0, p1, color);
             DrawLine(p1, p2, color);
             DrawLine(p2, p0, color);
+        }
+
+        public void DrawFilledTriangle(Vector2 p0, Vector2 p1, Vector2 p2, Color color)
+        {
+            // Order vertices from bottom (p0) to top (p2)
+            if (p1.Y < p0.Y) { (p0, p1) = (p1, p0); }
+            if (p2.Y < p0.Y) { (p2, p0) = (p0, p2); }
+            if (p2.Y < p1.Y) { (p2, p1) = (p1, p2); }
+
+            // Compute values of x for the three sides of the triangle
+            List<float> x01 = Interpolator.Interpolate((int)p0.Y, p0.X, (int)p1.Y, p1.X);
+            List<float> x12 = Interpolator.Interpolate((int)p1.Y, p1.X, (int)p2.Y, p2.X);
+            List<float> x02 = Interpolator.Interpolate((int)p0.Y, p0.X, (int)p2.Y, p2.X);
+
+            // Remove repeated value in `x01`
+            x01.RemoveAt(x01.Count - 1);
+
+            // Concatenate lists to find the x values of the 'long' side of the triangle
+            List<float> x012 = (x01.Concat(x12)).ToList();
+
+            // Determine which is the left side and which is the right side by comparing
+            // the x values at the middle height
+            List<float> xLeft, xRight;
+            int m = (int)MathF.Floor(x012.Count / 2);
+            if (x02[m] < x012[m])
+            {
+                xLeft = x02;
+                xRight = x012;
+            }
+            else
+            {
+                xLeft = x012;
+                xRight = x02;
+            }
+
+            // Draw all the lines. I'm not using the `DrawLine` method here because this is simpler,
+            // all are horizontal lines
+            for (int y = (int)p0.Y;  y <= p2.Y; y++)
+            {
+                for (int x = (int)xLeft[y - (int)p0.Y]; x <= xRight[y - (int)p0.Y]; x++)
+                {
+                    PutPixel(x, y, color);
+                }
+            }
         }
 
         private void PutPixel(float x, float y, Color color)
