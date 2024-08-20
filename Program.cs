@@ -13,6 +13,7 @@ namespace RasterizationRenderer
             Color BACKGROUND_COLOR = Color.White;
 
             Canvas canvas = new(WIDTH, HEIGHT, BACKGROUND_COLOR);
+            canvas.DrawLine(new Vector2(-200, -100), new Vector2(240, 120), Color.Black);
             canvas.DrawLine(new Vector2(-50, -200), new Vector2(60, 240), Color.Black);
             canvas.SaveToFile("image.png");
         }
