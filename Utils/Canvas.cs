@@ -41,13 +41,11 @@ namespace RasterizationRenderer.Utils
 
         public void DrawLine(Vector2 p0, Vector2 p1, Color color)
         {
-            float dx = p1.X - p0.X;
-            float dy = p1.Y  - p0.Y;
-            if (MathF.Abs(dx) > MathF.Abs(dy))
+            if (MathF.Abs(p1.X - p0.X) > MathF.Abs(p1.Y - p0.Y))
             {
                 if (p0.X > p1.X)
                 {
-                    (p1, p0) = Swap.SwapVector2(p0, p1);
+                    (p0, p1) = (p1, p0);
                 }
                 List<float> ys = Interpolator.Interpolate((int)p0.X, p0.Y, (int)p1.X, p1.Y);
                 for (int x = (int)p0.X; x <= p1.X; x++)
@@ -57,9 +55,9 @@ namespace RasterizationRenderer.Utils
             }
             else
             {
-                if (p0.Y < p1.Y)
+                if (p0.Y > p1.Y)
                 {
-                    (p1, p0) = Swap.SwapVector2(p0, p1);
+                    (p0, p1) = (p1, p0);
                 }
                 List<float> xs = Interpolator.Interpolate((int)p0.Y, p0.X, (int)p1.Y, p1.X);
                 for (int y = (int)p0.Y; y <= p1.Y; y++)
@@ -67,6 +65,13 @@ namespace RasterizationRenderer.Utils
                     PutPixel(xs[y - (int)p0.Y], y, color);
                 }
             }
+        }
+
+        public void DrawWireframeTriangle(Vector2 p0, Vector2 p1, Vector2 p2, Color color)
+        {
+            DrawLine(p0, p1, color);
+            DrawLine(p1, p2, color);
+            DrawLine(p2, p0, color);
         }
 
         private void PutPixel(float x, float y, Color color)
