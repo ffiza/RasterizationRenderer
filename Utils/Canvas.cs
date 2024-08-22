@@ -170,5 +170,84 @@ namespace RasterizationRenderer.Utils
                 }
             }
         }
+
+        /// <summary>
+        /// This method draws a colored filled triangle of vertices <c>p0</c>, <c>p1</c>, and <c>p2</c>, shaded
+        /// with intensity values <c>h0</c>, <c>h1</c>, and <c>h2</c> for each vertex.
+        /// </summary>
+        /// <param name="p0">A vertex of the triangle.</param>
+        /// <param name="p1">A vertex of the triangle.</param>
+        /// <param name="p2">A vertex of the triangle.</param>
+        /// <param name="p0">The color intensity of vertex <c>p0</c> of the triangle.</param>
+        /// <param name="p1">The color intensity of vertex <c>p1</c> of the triangle.</param>
+        /// <param name="p2">The color intensity of vertex <c>p2</c> of the triangle.</param>
+        /// <param name="color">The color of the triangle.</param>
+        public void DrawShadedTriangle(Vector2 p0, Vector2 p1, Vector2 p2, float h0, float h1, float h2, Color color)
+        {
+            // Check all intensities are between 0 and 1.
+            if (h0 < 0f || h0 > 1f) { throw new ArgumentOutOfRangeException(nameof(h0), "Intensities must be between 0 and 1."); }
+            if (h1 < 0f || h1 > 1f) { throw new ArgumentOutOfRangeException(nameof(h1), "Intensities must be between 0 and 1."); }
+            if (h2 < 0f || h2 > 1f) { throw new ArgumentOutOfRangeException(nameof(h2), "Intensities must be between 0 and 1."); }
+
+            // Order vertices from bottom (p0) to top (p2) and the corresponding intensities.
+            if (p1.Y < p0.Y) { (p0, p1) = (p1, p0); (h0, h1) = (h1, h0); }
+            if (p2.Y < p0.Y) { (p2, p0) = (p0, p2); (h2, h0) = (h0, h2); }
+            if (p2.Y < p1.Y) { (p2, p1) = (p1, p2); (h2, h1) = (h1, h2); }
+
+            // Compute values of x and h for the three sides of the triangle.
+            List<float> x01 = Interpolator.Interpolate((int)p0.Y, p0.X, (int)p1.Y, p1.X);
+            List<float> h01 = Interpolator.Interpolate((int)p0.Y, h0, (int)p1.Y, h1);
+            List<float> x12 = Interpolator.Interpolate((int)p1.Y, p1.X, (int)p2.Y, p2.X);
+            List<float> h12 = Interpolator.Interpolate((int)p1.Y, h1, (int)p2.Y, h2);
+            List<float> x02 = Interpolator.Interpolate((int)p0.Y, p0.X, (int)p2.Y, p2.X);
+            List<float> h02 = Interpolator.Interpolate((int)p0.Y, h0, (int)p2.Y, h2);
+
+            // Remove repeated value in x01.
+            x01.RemoveAt(x01.Count - 1);
+
+            // Concatenate lists to find the x values of the long side of the triangle.
+            List<float> x012 = (x01.Concat(x12)).ToList();
+
+            // Remove repeated value in h01.
+            h01.RemoveAt(h01.Count - 1);
+
+            // Concatenate lists to find the h values of the long side of the triangle.
+            List<float> h012 = (h01.Concat(h12)).ToList();
+
+            // Determine which is the left side and which is the right side by comparing
+            // the x values at the middle height.
+            List<float> xLeft, xRight;
+            List<float> hLeft, hRight;
+            int m = (int)MathF.Floor(x012.Count / 2);
+            if (x02[m] < x012[m])
+            {
+                xLeft = x02;
+                hLeft = h02;
+                xRight = x012;
+                hRight = h012;
+            }
+            else
+            {
+                xLeft = x012;
+                hLeft = h012;
+                xRight = x02;
+                hRight = h02;
+            }
+
+            // Draw all the lines. This part does not use the DrawLine method because
+            // all are horizontal lines.
+            for (int y = (int)p0.Y; y <= p2.Y; y++)
+            {
+                int xLeftPoint = (int)xLeft[y - (int)p0.Y];
+                int xRightPoint = (int)xRight[y - (int)p0.Y];
+                List<float> hSegment = Interpolator.Interpolate(xLeftPoint, hLeft[y - (int)p0.Y], xRightPoint, hRight[y - (int)p0.Y]);
+                for (int x = xLeftPoint; x <= xRightPoint; x++)
+                {
+                    float h = hSegment[x - xLeftPoint];
+                    Color shadedColor = Color.FromArgb((int)(color.R * h), (int)(color.G * h), (int)(color.B * h));
+                    PutPixel(x, y, shadedColor);
+                }
+            }
+        }
     }
 }
