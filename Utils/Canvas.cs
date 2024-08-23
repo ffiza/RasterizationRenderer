@@ -41,7 +41,7 @@ namespace RasterizationRenderer.Utils
         /// <param name="color">The color of the pixel.</param>
         private void PutPixel(float x, float y, Color color)
         {
-            (float newX, float newY) = Coordinates.CenterCoords(x, y, this);
+            (float newX, float newY) = Coordinates.Transform(x, y, this);
             _bmp.SetPixel((int)newX, (int)newY, color);
         }
 
