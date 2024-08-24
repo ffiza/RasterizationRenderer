@@ -42,7 +42,10 @@ namespace RasterizationRenderer.Utils
         private void PutPixel(float x, float y, Color color)
         {
             (float newX, float newY) = Coordinates.Transform(x, y, this);
-            _bmp.SetPixel((int)newX, (int)newY, color);
+            if (newX >= 0 && newX < Width && newY >= 0 && newY < Height)
+            {
+                _bmp.SetPixel((int)newX, (int)newY, color);
+            }
         }
 
         /// <summary>
