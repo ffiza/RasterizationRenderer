@@ -24,7 +24,7 @@ namespace RasterizationRenderer.Models
         /// Translate the position of the vertices of this model by a vector <c>translation</c>.
         /// </summary>
         /// <param name="translation">The translation vector.</param>
-        public void Translate(Vector3 translation)
+        private void Translate(Vector3 translation)
         {
             foreach (Triangle t in Triangles)
             {
@@ -36,7 +36,7 @@ namespace RasterizationRenderer.Models
         /// Scale the position of the vertices of this model by a given factor.
         /// </summary>
         /// <param name="scale">The scale factor.</param>
-        public void Scale(float scale)
+        private void Scale(float scale)
         {
             foreach (Triangle t in Triangles)
             {
@@ -44,9 +44,29 @@ namespace RasterizationRenderer.Models
             }
         }
 
+        /// <summary>
+        /// Rotate the position of the vertices of this model by a given quaternion.
+        /// </summary>
+        /// <param name="rotation">The quaternion that represents the rotation.</param>
+        private void Rotate(Quaternion rotation)
+        {
+            foreach (Triangle t in Triangles)
+            {
+                t.Rotate(rotation);
+            }
+        }
+
+        /// <summary>
+        /// Apply (in order) all the transformations in the <c>Transform</c> of this model.
+        /// </summary>
+        /// <param name="t">The <c>Transform</c> that holds all the transformations.</param>
         public void ApplyTransform(Transform t)
         {
             Scale(t.Scale);
+            foreach (Quaternion q in t.Rotations)
+            {
+                Rotate(q);
+            }
             Translate(t.Translation);
         }
     }

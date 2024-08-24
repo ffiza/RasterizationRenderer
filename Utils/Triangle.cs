@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Numerics;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace RasterizationRenderer.Utils
 {
@@ -38,6 +39,18 @@ namespace RasterizationRenderer.Utils
             for (int i = 0; i < Vertices.Length; i++)
             {
                 Vertices[i] *= scale;
+            }
+        }
+
+        /// <summary>
+        /// Rotate the position of the vertices of this triangle by a given quaternion.
+        /// </summary>
+        /// <param name="rotation">The quaternion that represents the rotation.</param>
+        public void Rotate(Quaternion rotation)
+        {
+            for (int i = 0; i < Vertices.Length; i++)
+            {
+                Vertices[i] = Vector3.Transform(Vertices[i], rotation);
             }
         }
     }
