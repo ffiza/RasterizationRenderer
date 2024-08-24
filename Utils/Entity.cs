@@ -1,30 +1,33 @@
-﻿using System.Numerics;
+﻿using System.Drawing;
+using RasterizationRenderer.Models;
 
 namespace RasterizationRenderer.Utils
 {
+    /// <summary>
+    /// A generic class to manage entities in the 3D world.
+    /// </summary>
     public class Entity
     {
-        public List<Triangle> Triangles { get; private set; } = new();
+        private readonly string _modelName;
+        private readonly Transform _transform;
+        private readonly Color _color;
+        public Model Model { get; private set; }
 
-        /// <summary>
-        /// Add a new triangle to this entity.
-        /// </summary>
-        /// <param name="triangle">The new triangle.</param>
-        public void AddTriangle(Triangle triangle)
+        public Entity(string modelName, Transform transform, Color color)
         {
-            Triangles.Add(triangle);
-        }
-
-        /// <summary>
-        /// Translate the entity by a vector <c>t</c>.
-        /// </summary>
-        /// <param name="t">The translation vector.</param>
-        public void Translate(Vector3 t)
-        {
-            foreach (Triangle triangle in Triangles)
+            _modelName = modelName;
+            _transform = transform;
+            _color = color;
+            if (_modelName == "Cube")
             {
-                triangle.Translate(t);
+                Model = new Cube(_color);
             }
+            else
+            {
+                throw new Exception("Model anme not implemented.");
+            }
+            Model.Scale(_transform.Scale);
+            Model.Translate(_transform.Translation);
         }
     }
 }

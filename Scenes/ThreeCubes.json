@@ -1,0 +1,46 @@
+﻿{
+  "Name": "Test Scene",
+  "Viewport": {
+    "Width": 1.0,
+    "Height": 1.0,
+    "DistanceToCamera": 1.0
+  },
+  "Entities": [
+    {
+      "ModelName": "Cube",
+      "Transform": {
+        "Scale": 1.0,
+        "Translation": {
+          "X": -1.5,
+          "Y": 0.0,
+          "Z": 7.0
+        }
+      },
+      "Color": "Red"
+    },
+    {
+      "ModelName": "Cube",
+      "Transform": {
+        "Scale": 1.0,
+        "Translation": {
+          "X": 2.5,
+          "Y": -2.0,
+          "Z": 15.0
+        }
+      },
+      "Color": "Green"
+    },
+    {
+      "ModelName": "Cube",
+      "Transform": {
+        "Scale": 0.5,
+        "Translation": {
+          "X": 1.0,
+          "Y": 1.0,
+          "Z": 3.0
+        }
+      },
+      "Color": "Blue"
+    }
+  ]
+}
