@@ -8,7 +8,7 @@ namespace RasterizationRenderer
         static void Main()
         {
             Canvas canvas = new(1000, 1000, Color.White);
-            Scene scene = Scene.FromJSON("Scenes\\ThreeCubes.json");
+            Scene scene = Scene.FromJSON("C:\\Users\\Usuario\\Documents\\Repositories\\RasterizationRenderer\\Scenes\\ThreeCubes.json");
             scene.Render(canvas);
             canvas.SaveToPNG("image.png");
         }

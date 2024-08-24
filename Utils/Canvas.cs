@@ -54,11 +54,6 @@ namespace RasterizationRenderer.Utils
         /// <param name="filename">The name of the output file.</param>
         public void SaveToPNG(string filename)
         {
-            if (File.Exists(filename))
-            {
-                Console.WriteLine("File exists.");
-                File.Delete(filename);
-            }
             _bmp.Save(filename, ImageFormat.Png);
             _bmp.Dispose();
         }

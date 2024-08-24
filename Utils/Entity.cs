@@ -26,8 +26,7 @@ namespace RasterizationRenderer.Utils
             {
                 throw new Exception("Model anme not implemented.");
             }
-            Model.Scale(_transform.Scale);
-            Model.Translate(_transform.Translation);
+            Model.ApplyTransform(_transform);
         }
     }
 }

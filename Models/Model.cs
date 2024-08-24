@@ -43,5 +43,11 @@ namespace RasterizationRenderer.Models
                 t.Scale(scale);
             }
         }
+
+        public void ApplyTransform(Transform t)
+        {
+            Scale(t.Scale);
+            Translate(t.Translation);
+        }
     }
 }
