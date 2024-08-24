@@ -10,6 +10,18 @@
       "ModelName": "Cube",
       "Transform": {
         "Scale": 1.0,
+        "Rotations": [
+          {
+            "X": 0.0,
+            "Y": 10.0,
+            "Z": 0.0
+          },
+          {
+            "X": 0.0,
+            "Y": 0.0,
+            "Z": 5.0
+          }
+        ],
         "Translation": {
           "X": -1.5,
           "Y": 0.0,
@@ -22,6 +34,13 @@
       "ModelName": "Cube",
       "Transform": {
         "Scale": 1.0,
+        "Rotations": [
+          {
+            "X": -15.0,
+            "Y": 0.0,
+            "Z": 0.0
+          }
+        ],
         "Translation": {
           "X": 2.5,
           "Y": -2.0,
@@ -34,6 +53,13 @@
       "ModelName": "Cube",
       "Transform": {
         "Scale": 0.5,
+        "Rotations": [
+          {
+            "X": 0.0,
+            "Y": 0.0,
+            "Z": 0.0
+          }
+        ],
         "Translation": {
           "X": 1.0,
           "Y": 1.0,
