@@ -17,7 +17,7 @@ This project is inspired by the book Computer Graphics from Scratch by Gabriel G
 </p>
 <p align="center">An example of a 3D scene rendered at the current state of the project.</p>
 
-Future Work:
+Future work:
 
 - [ ] Implement camera clipping.
 - [ ] Implement the removal of hidden surfaces.
