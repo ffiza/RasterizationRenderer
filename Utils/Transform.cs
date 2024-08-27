@@ -7,12 +7,12 @@ namespace RasterizationRenderer.Utils
     /// </summary>
     public class Transform
     {
-        public float Scale { get; private set; }
+        public Vector3 Scale { get; private set; }
         public List<Vector3> RotationAngles { get; private set; }
         public Vector3 Translation { get; private set; }
         public List<Quaternion> Rotations { get; set; }
 
-        public Transform(float scale, List<Vector3> rotations, Vector3 translation)
+        public Transform(Vector3 scale, List<Vector3> rotations, Vector3 translation)
         {
             Scale = scale;
             RotationAngles = rotations;

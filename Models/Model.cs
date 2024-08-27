@@ -36,7 +36,7 @@ namespace RasterizationRenderer.Models
         /// Scale the position of the vertices of this model by a given factor.
         /// </summary>
         /// <param name="scale">The scale factor.</param>
-        private void Scale(float scale)
+        private void Scale(Vector3 scale)
         {
             foreach (Triangle t in Triangles)
             {

@@ -34,11 +34,11 @@ namespace RasterizationRenderer.Utils
         /// Scale the position of the vertices of this triangle by a given factor.
         /// </summary>
         /// <param name="scale">The scale factor.</param>
-        public void Scale(float scale)
+        public void Scale(Vector3 scale)
         {
             for (int i = 0; i < Vertices.Length; i++)
             {
-                Vertices[i] *= scale;
+                Vertices[i] = Vector3.Multiply(Vertices[i], scale);
             }
         }
 
