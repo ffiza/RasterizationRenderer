@@ -13,6 +13,14 @@ This program calculates the projection of 3D entities onto a given viewport and 
 This project is inspired by the book Computer Graphics from Scratch by Gabriel Gambetta.
 
 <p align="center">
-    <img src="https://i.imgur.com/UZAvzLy.png" width=300></a>
+    <img src="https://i.imgur.com/UZAvzLy.png" width=400></a>
 </p>
 <p align="center">An example of a 3D scene rendered at the current state of the project.</p>
+
+Future Work:
+
+- [ ] Implement camera clipping.
+- [ ] Implement the removal of hidden surfaces.
+- [ ] Add shading for entity colors.
+- [ ] Add textures for entities.
+- [ ] Add primitives other than cubes.
