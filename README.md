@@ -13,6 +13,6 @@ This program calculates the projection of 3D entities onto a given viewport and 
 This project is inspired by the book Computer Graphics from Scratch by Gabriel Gambetta.
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/ffiza/RasterizationRenderer/main/image.png?token=GHSAT0AAAAAACTBUDO7IRJZMHNIBHKA2U5QZWND26A" width=300></a>
+    <img src="https://i.imgur.com/UZAvzLy.png" width=300></a>
 </p>
 <p align="center">An example of a 3D scene rendered at the current state of the project.</p>
