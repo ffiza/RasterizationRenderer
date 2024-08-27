@@ -6,4 +6,13 @@
     <img src="https://forthebadge.com/images/badges/made-with-c-sharp.svg"></a>
 </p>
 
-A very simple 3D renderer that uses rasterization. Inspired by the book *Computer Graphics from Scratch* by Gabriel Gambetta.
+A very simple 3D renderer that uses rasterization. All code is written in C#.
+
+This program calculates the projection of 3D entities onto a given viewport and draws the projected image onto a canvas. Each entity is implemented as a list of triangles, a color, and a transform. The transform allows the application of scaling, rotation, and translation to the model. Each triangle, in turn, is composed of a series of vertices that can be scaled, rotated, and translated in 3D space.
+
+This project is inspired by the book Computer Graphics from Scratch by Gabriel Gambetta.
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/ffiza/RasterizationRenderer/main/image.png?token=GHSAT0AAAAAACTBUDO7IRJZMHNIBHKA2U5QZWND26A" width=300></a>
+</p>
+<p align="center">An example of a 3D scene rendered at the current state of the project.</p>
