@@ -1,0 +1,41 @@
+﻿{
+    "Name": "Basic Cube",
+    "Viewport": {
+        "Width": 2.0,
+        "Height": 2.0,
+        "DistanceToCamera": 1.0,
+        "ClippingPlanes": [
+        {
+            "Normal": { "X": 0.0, "Y": 0.0, "Z": 1 },
+            "Distance": -1.0
+        },
+        {
+            "Normal": { "X": 0.7071, "Y": 0, "Z": 0.7071 },
+            "Distance": 0.0
+        },
+        {
+            "Normal": { "X": -0.7071, "Y": 0, "Z": 0.7071 },
+            "Distance": 0.0
+        },
+        {
+            "Normal": { "X": 0, "Y": 0.7071, "Z": 0.7071 },
+            "Distance": 0.0
+        },
+        {
+            "Normal":  { "X": 0, "Y": -0.7071, "Z": 0.7071 },
+            "Distance": 0.0
+        }
+        ]
+    },
+    "Entities": [
+    {
+        "ModelName": "Cube",
+        "Transform": {
+            "Scale": 1.0,
+            "Rotations": [ { "X": 0.0, "Y": 0.0, "Z": 0.0 } ],
+            "Translation": { "X": 0.0, "Y": 0.0, "Z": -20.0 }
+        },
+        "Color": "Red"
+    }
+    ]
+}
