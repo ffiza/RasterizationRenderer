@@ -12,5 +12,16 @@ namespace RasterizationRenderer.Utils
             Normal = Vector3.Normalize(normal);
             Distance = distance;
         }
+
+        /// <summary>
+        /// This method computes the signed distance between the plane and a
+        /// point.
+        /// </summary>
+        /// <param name="point">The position of the point.</param>
+        /// <returns></returns>
+        public float ComputeSignedDistance(Vector3 point)
+        {
+            return Vector3.Dot(point, Normal) - Distance;
+        }
     }
 }
