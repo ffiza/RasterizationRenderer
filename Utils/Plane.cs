@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Numerics;
 
 namespace RasterizationRenderer.Utils
 {
@@ -14,7 +9,7 @@ namespace RasterizationRenderer.Utils
 
         public Plane(Vector3 normal, float distance)
         {
-            Normal = normal;
+            Normal = Vector3.Normalize(normal);
             Distance = distance;
         }
     }
