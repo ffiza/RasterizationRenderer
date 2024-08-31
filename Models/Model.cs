@@ -12,6 +12,8 @@ namespace RasterizationRenderer.Models
         public string Name { get; protected set; }
         public List<Triangle> Triangles { get; protected set; }
         public Color Color { get; protected set; }
+        public float BoundingRadius { get; protected set; }
+        public Vector3 BoundingCenter { get; protected set; }
 
         public Model(Color color)
         {
@@ -68,6 +70,35 @@ namespace RasterizationRenderer.Models
                 Rotate(q);
             }
             Translate(t.Translation);
+        }
+
+        /// <summary>
+        /// Compute the properties (center and radius) of the sphere that completely contains
+        /// this <c>Model</c>.
+        /// </summary>
+        protected void ComputeBoundingSphere()
+        {
+            int nVertices = 3 * Triangles.Count;
+            BoundingCenter = Vector3.Zero;
+            BoundingRadius = 0f;
+            foreach (Triangle t in Triangles)
+            {
+                foreach (Vector3 v in t.Vertices)
+                {
+                    BoundingCenter += v / nVertices;
+                }
+            }
+            foreach (Triangle t in Triangles)
+            {
+                foreach (Vector3 v in t.Vertices)
+                {
+                    float distance = (v - BoundingCenter).Length();
+                    if (distance > BoundingRadius)
+                    {
+                        BoundingRadius = distance;
+                    }
+                }
+            }
         }
     }
 }
