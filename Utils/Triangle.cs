@@ -10,12 +10,15 @@ namespace RasterizationRenderer.Utils
     public class Triangle
     {
         public Vector3[] Vertices { get; private set; }
-        public Color Color { get; private set; } 
+        public Color Color { get; private set; }
+        public float BoundingRadius { get; private set; }
+        public Vector3 BoundingCenter { get; private set; }
 
         public Triangle(Vector3 p0, Vector3 p1, Vector3 p2, Color color)
         {
             Vertices = new Vector3[3] { p0, p1, p2 };
             Color = color;
+            ComputeBoundingSphere();
         }
 
         /// <summary>
@@ -51,6 +54,25 @@ namespace RasterizationRenderer.Utils
             for (int i = 0; i < Vertices.Length; i++)
             {
                 Vertices[i] = Vector3.Transform(Vertices[i], rotation);
+            }
+        }
+
+        /// <summary>
+        /// Compute the properties (center and radius) of the sphere that completely contains
+        /// this <c>Triangle</c>.
+        /// </summary>
+        private void ComputeBoundingSphere()
+        {
+            int nVertices = 3;
+            BoundingCenter = (Vertices[0] + Vertices[1] + Vertices[2]) / (float)nVertices;
+            BoundingRadius = 0f;
+            foreach (Vector3 v in Vertices)
+            {
+                float distance = (v - BoundingCenter).Length();
+                if (distance > BoundingRadius)
+                {
+                    BoundingRadius = distance;
+                }
             }
         }
     }
