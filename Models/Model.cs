@@ -61,15 +61,16 @@ namespace RasterizationRenderer.Models
         /// <summary>
         /// Apply (in order) all the transformations in the <c>Transform</c> of this model.
         /// </summary>
-        /// <param name="t">The <c>Transform</c> that holds all the transformations.</param>
-        public void ApplyTransform(Transform t)
+        /// <param name="transform">The <c>Transform</c> that holds all the transformations.</param>
+        public void ApplyTransform(Transform transform)
         {
-            Scale(t.Scale);
-            foreach (Quaternion q in t.Rotations)
+            Scale(transform.Scale);
+            foreach (Quaternion q in transform.Rotations)
             {
                 Rotate(q);
             }
-            Translate(t.Translation);
+            Translate(transform.Translation);
+            ComputeBoundingSphere();
         }
 
         /// <summary>
