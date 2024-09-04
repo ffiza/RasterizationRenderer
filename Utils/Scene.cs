@@ -30,16 +30,48 @@ namespace RasterizationRenderer.Utils
         /// <param name="canvas">The canvas onto which to render the scene.</param>
         public void Render(Canvas canvas)
         {
-            foreach (Entity entity in _entities)
+            // Render the clipped scene
+            Scene clippedScene = Clip(Viewport.ClippingPlanes);
+            foreach (Entity entity in clippedScene.Entities)
             {
                 foreach (Triangle triangle in entity.Model.Triangles)
                 {
-                    canvas.DrawWireframeTriangle(Coordinates.WorldToCanvas(triangle.Vertices[0], _viewport, canvas),
-                                                 Coordinates.WorldToCanvas(triangle.Vertices[1], _viewport, canvas),
-                                                 Coordinates.WorldToCanvas(triangle.Vertices[2], _viewport, canvas),
+                    canvas.DrawWireframeTriangle(Coordinates.WorldToCanvas(triangle.Vertices[0], Viewport, canvas),
+                                                 Coordinates.WorldToCanvas(triangle.Vertices[1], Viewport, canvas),
+                                                 Coordinates.WorldToCanvas(triangle.Vertices[2], Viewport, canvas),
                                                  triangle.Color);
                 }
             }
+        }
+
+        /// <summary>
+        /// Clip this <c>Scene</c> against a list of <c>Plane</c>.
+        /// </summary>
+        /// <param name="planes">A list of clipping planes.</param>
+        /// <returns>The clipped scene.</returns>
+        public Scene Clip(List<Plane> planes)
+        {
+            return ClipScene(this, planes);
+        }
+
+        /// <summary>
+        /// Clip a given <c>Scene</c> against a list of <c>Plane</c>.
+        /// </summary>
+        /// <param name="scene">The <c>Scene</c> instance to clip.</param>
+        /// <param name="planes">A list of clipping planes.</param>
+        /// <returns>The clipped scene.</returns>
+        public static Scene ClipScene(Scene scene, List<Plane> planes)
+        {
+            Scene clippedScene = new(scene.Name, scene.Viewport, new());
+            foreach (Entity entity in scene.Entities)
+            {
+                Entity? clippedEntity = entity.ClipAgainstPlanes(planes);
+                if (clippedEntity != null)
+                {
+                    clippedScene.Entities.Add(clippedEntity);
+                }
+            }
+            return clippedScene;
         }
 
         /// <summary>
