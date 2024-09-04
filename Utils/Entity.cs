@@ -115,5 +115,23 @@ namespace RasterizationRenderer.Utils
             }
         }
 
+        /// <summary>
+        /// Return a clone of this instance.
+        /// </summary>
+        /// <returns>A clone of the current instance.</returns>
+        public Entity Clone()
+        {
+            return Clone(this);
+        }
+
+        /// <summary>
+        /// Return a clone of the given <c>Entity</c>.
+        /// </summary>
+        /// <param name="entity">The <c>Entity</c> instance to clone.</param>
+        /// <returns>A clone of the given instance.</returns>
+        public static Entity Clone(Entity entity)
+        {
+            return new Entity(entity.ModelName, entity.Transform, entity.Color);
+        }
     }
 }
