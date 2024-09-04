@@ -25,8 +25,6 @@ namespace RasterizationRenderer.Models
             Triangles.Add(new Triangle(new Vector3(1f, 1f, -1f), new Vector3(-1f, 1f, 1f), new Vector3(1f, 1f, 1f), color));
             Triangles.Add(new Triangle(new Vector3(-1f, -1f, 1f), new Vector3(-1f, -1f, -1f), new Vector3(1f, -1f, -1f), color));
             Triangles.Add(new Triangle(new Vector3(-1f, -1f, 1f), new Vector3(1f, -1f, -1f), new Vector3(1f, -1f, 1f), color));
-
-            ComputeBoundingSphere();
         }
     }
 }
