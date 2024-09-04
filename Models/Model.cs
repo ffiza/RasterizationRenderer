@@ -101,5 +101,16 @@ namespace RasterizationRenderer.Models
                 }
             }
         }
+
+        /// <summary>
+        /// Set the list of <c>Triangle</c> of this <c>Model</c> with a given
+        /// list.
+        /// </summary>
+        /// <param name="triangles">A list of <c>Triangle</c>.</param>
+        public void SetTriangles(List<Triangle> triangles)
+        {
+            Triangles = triangles;
+            ComputeBoundingSphere();
+        }
     }
 }
