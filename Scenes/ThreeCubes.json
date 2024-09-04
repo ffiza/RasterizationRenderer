@@ -1,84 +1,60 @@
 ﻿{
-  "Name": "Three Cubes",
-  "Viewport": {
-    "Width": 1.0,
-    "Height": 1.0,
-    "DistanceToCamera": 1.0
-  },
-  "Entities": [
-    {
-      "ModelName": "Cube",
-      "Transform": {
-        "Scale": {
-          "X": 1.0,
-          "Y": 1.0,
-          "Z": 1.0
+    "Name": "Three Cubes",
+    "Viewport": {
+        "Width": 2.0,
+        "Height": 2.0,
+        "DistanceToCamera": 1.0,
+        "ClippingPlanes": [
+        {
+            "Normal": { "X": 0.0, "Y": 0.0, "Z": 1.0 },
+            "Distance": 1.0
         },
-        "Rotations": [
-          {
-            "X": 0.0,
-            "Y": 10.0,
-            "Z": 0.0
-          },
-          {
-            "X": 0.0,
-            "Y": 0.0,
-            "Z": 5.0
-          }
-        ],
-        "Translation": {
-          "X": -1.5,
-          "Y": 0.0,
-          "Z": 7.0
+        {
+            "Normal": { "X": 1.0, "Y": 0.0, "Z": 1.0 },
+            "Distance": 0.0
+        },
+        {
+            "Normal": { "X": -1.0, "Y": 0.0, "Z": 1.0 },
+            "Distance": 0.0
+        },
+        {
+            "Normal": { "X": 0.0, "Y": 1.0, "Z": 1.0 },
+            "Distance": 0.0
+        },
+        {
+            "Normal":  { "X": 0.0, "Y": -1.0, "Z": 1.0 },
+            "Distance": 0.0
         }
-      },
-      "Color": "Red"
+        ]
+    },
+    "Entities": [
+    {
+        "ModelName": "Cube",
+        "Transform": {
+            "Scale": { "X": 1.0, "Y": 1.0, "Z": 1.0 },
+            "Rotations": [  { "X": 0.0, "Y": 10.0, "Z": 0.0 },
+                            { "X": 0.0, "Y": 0.0, "Z": 5.0 } ],
+            "Translation": { "X": -1.5, "Y": 0.0, "Z": 7.0 }
+        },
+        "Color": "Red"
     },
     {
-      "ModelName": "Cube",
-      "Transform": {
-        "Scale": {
-          "X": 1.5,
-          "Y": 1.0,
-          "Z": 3.0
+        "ModelName": "Cube",
+        "Transform": {
+            "Scale": { "X": 1.5, "Y": 1.0, "Z": 3.0 },
+            "Rotations": [ { "X": -15.0, "Y": 0.0, "Z": 0.0 } ],
+            "Translation": { "X": 2.5, "Y": -2.0, "Z": 15.0 }
         },
-        "Rotations": [
-          {
-            "X": -15.0,
-            "Y": 0.0,
-            "Z": 0.0
-          }
-        ],
-        "Translation": {
-          "X": 2.5,
-          "Y": -2.0,
-          "Z": 15.0
-        }
-      },
-      "Color": "Green"
+        "Color": "Green"
     },
     {
-      "ModelName": "Cube",
-      "Transform": {
-        "Scale": {
-          "X": 0.5,
-          "Y": 0.5,
-          "Z": 0.5
+        "ModelName": "Cube",
+        "Transform": {
+            "Scale": { "X": 0.5, "Y": 0.5, "Z": 0.5 },
+            "Rotations": [ { "X": 0.0, "Y": 0.0, "Z": 0.0 } ],
+            "Translation": { "X": 1.0, "Y": 1.0, "Z": 3.0 }
         },
-        "Rotations": [
-          {
-            "X": 0.0,
-            "Y": 0.0,
-            "Z": 0.0
-          }
-        ],
-        "Translation": {
-          "X": 1.0,
-          "Y": 1.0,
-          "Z": 3.0
+        "Color": "Blue"
         }
-      },
-      "Color": "Blue"
-    }
-  ]
+      ]
 }
