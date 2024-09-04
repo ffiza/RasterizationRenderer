@@ -8,25 +8,25 @@ namespace RasterizationRenderer.Utils
     /// </summary>
     public class Entity
     {
-        private readonly string _modelName;
-        private readonly Transform _transform;
-        private readonly Color _color;
+        public string ModelName { get; private set; }
+        public Transform Transform { get; private set; }
+        public Color Color { get; private set; }
         public Model Model { get; private set; }
 
         public Entity(string modelName, Transform transform, Color color)
         {
-            _modelName = modelName;
-            _transform = transform;
-            _color = color;
-            if (_modelName == "Cube")
+            ModelName = modelName;
+            Transform = transform;
+            Color = color;
+            if (ModelName == "Cube")
             {
-                Model = new Cube(_color);
+                Model = new Cube(Color);
             }
             else
             {
-                throw new Exception("Model anme not implemented.");
+                Model = new(Color);
             }
-            Model.ApplyTransform(_transform);
+            Model.ApplyTransform(Transform);
         }
     }
 }
