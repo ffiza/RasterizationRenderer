@@ -54,10 +54,66 @@ namespace RasterizationRenderer.Utils
         }
 
         /// <summary>
+        /// Clip this <c>Triangle</c> against a given <c>Plane</c>.
         /// </summary>
+        /// <param name="plane">The clipping plane.</param>
+        /// <returns>A list of <c>Triangle</c> the results from the clipping process.</returns>
+        public List<Triangle> ClipAgainstPlane(Plane plane)
         {
+            return ClipTriangleAgainstPlane(this, plane);
+        }
+
+        /// <summary>
+        /// Clip a <c>Triangle</c> against a given <c>Plane</c>.
+        /// </summary>
+        /// <param name="triangle">The triangle to clip.</param>
+        /// <param name="plane">The clipping plane.</param>
+        /// <returns>A list of <c>Triangle</c> the results from the clipping process.</returns>
+        public static List<Triangle> ClipTriangleAgainstPlane(Triangle triangle, Plane plane)
+        {
+            List<Triangle> clippingResult = new List<Triangle>();
+            float d0 = plane.ComputeSignedDistance(triangle.Vertices[0]);
+            float d1 = plane.ComputeSignedDistance(triangle.Vertices[1]);
+            float d2 = plane.ComputeSignedDistance(triangle.Vertices[2]);
+
+            if (d0 >= 0f && d1 >= 0f && d2 >= 0f) // All vertices inside clipping volume.
             {
+                clippingResult.Add(triangle);
+            }
+            else if (d0 < 0f && d1 < 0f && d2 < 0f) { } // No vertices inside clipping volume.
+            else if (d0 >= 0f && d1 < 0f && d2 < 0f) // One vertex inside clipping volume.
+            {
+                Vector3 new_d1 = plane.SegmentIntersect(triangle.Vertices[0], triangle.Vertices[1]);
+                Vector3 new_d2 = plane.SegmentIntersect(triangle.Vertices[0], triangle.Vertices[2]);
+                clippingResult.Add(new Triangle(triangle.Vertices[0], new_d1, new_d2, triangle.Color));
+            }
+            else if (d0 < 0f && d1 >= 0f && d2 < 0f) // One vertex inside clipping volume.
+            {
+                Vector3 new_d0 = plane.SegmentIntersect(triangle.Vertices[1], triangle.Vertices[0]);
+                Vector3 new_d2 = plane.SegmentIntersect(triangle.Vertices[1], triangle.Vertices[2]);
+                clippingResult.Add(new Triangle(new_d0, triangle.Vertices[1], new_d2, triangle.Color));
+            }
+            else if (d0 < 0f && d1 < 0f && d2 >= 0f) // One vertex inside clipping volume.
+            {
+                Vector3 new_d0 = plane.SegmentIntersect(triangle.Vertices[2], triangle.Vertices[0]);
+                Vector3 new_d1 = plane.SegmentIntersect(triangle.Vertices[2], triangle.Vertices[1]);
+                clippingResult.Add(new Triangle(new_d0, new_d1, triangle.Vertices[2], triangle.Color));
+            }
+            else // Two vertices inside clipping volume.
+            {
+                if (d0 < 0f)
                 {
+                    Vector3 new_d1 = plane.SegmentIntersect(triangle.Vertices[1], triangle.Vertices[0]);
+                    Vector3 new_d2 = plane.SegmentIntersect(triangle.Vertices[2], triangle.Vertices[0]);
+                    clippingResult.Add(new Triangle(triangle.Vertices[1], triangle.Vertices[2], new_d1, triangle.Color));
+                    clippingResult.Add(new Triangle(new_d1, triangle.Vertices[2], new_d2, triangle.Color));
+                }
+                else if (d1 < 0f)
+                {
+                    Vector3 new_d0 = plane.SegmentIntersect(triangle.Vertices[0], triangle.Vertices[1]);
+                    Vector3 new_d2 = plane.SegmentIntersect(triangle.Vertices[2], triangle.Vertices[1]);
+                    clippingResult.Add(new Triangle(triangle.Vertices[0], triangle.Vertices[2], new_d0, triangle.Color));
+                    clippingResult.Add(new Triangle(new_d0, triangle.Vertices[2], new_d2, triangle.Color));
                 }
                 else if (d2 < 0f)
                 {
