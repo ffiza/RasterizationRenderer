@@ -2,10 +2,8 @@
 
 namespace RasterizationRenderer.Utils
 {
-    public class Coordinates
+    public static class Coordinates
     {
-        public Coordinates() { }
-
         /// <summary>
         /// This method performs a convenient transformation of coordinates, from center of the canvas with x
         /// pointing to the right and y poiting up to the top left corner of the canvas with x pointing to
