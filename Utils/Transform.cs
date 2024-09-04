@@ -9,7 +9,7 @@ namespace RasterizationRenderer.Utils
     {
         public Vector3 Scale { get; private set; }
         public Vector3 Translation { get; private set; }
-        public List<Quaternion> Rotations { get; set; }
+        public List<Quaternion> Rotations { get; private set; }
 
         public Transform(Vector3 scale, List<Vector3> rotations, Vector3 translation)
         {
