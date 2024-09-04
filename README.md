@@ -19,7 +19,7 @@ This project is inspired by the book Computer Graphics from Scratch by Gabriel G
 
 Future work:
 
-- [ ] Implement camera clipping.
+- [x] Implement camera clipping.
 - [ ] Implement the removal of hidden surfaces.
 - [ ] Add shading for entity colors.
 - [ ] Add textures for entities.
