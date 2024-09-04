@@ -12,6 +12,8 @@ namespace RasterizationRenderer.Models
         public string Name { get; protected set; }
         public List<Triangle> Triangles { get; protected set; }
         public Color Color { get; protected set; }
+        public float BoundingRadius { get; protected set; }
+        public Vector3 BoundingCenter { get; protected set; }
 
         public Model(Color color)
         {
@@ -59,15 +61,56 @@ namespace RasterizationRenderer.Models
         /// <summary>
         /// Apply (in order) all the transformations in the <c>Transform</c> of this model.
         /// </summary>
-        /// <param name="t">The <c>Transform</c> that holds all the transformations.</param>
-        public void ApplyTransform(Transform t)
+        /// <param name="transform">The <c>Transform</c> that holds all the transformations.</param>
+        public void ApplyTransform(Transform transform)
         {
-            Scale(t.Scale);
-            foreach (Quaternion q in t.Rotations)
+            Scale(transform.Scale);
+            foreach (Quaternion q in transform.Rotations)
             {
                 Rotate(q);
             }
-            Translate(t.Translation);
+            Translate(transform.Translation);
+            ComputeBoundingSphere();
+        }
+
+        /// <summary>
+        /// Compute the properties (center and radius) of the sphere that completely contains
+        /// this <c>Model</c>.
+        /// </summary>
+        public void ComputeBoundingSphere()
+        {
+            int nVertices = 3 * Triangles.Count;
+            BoundingCenter = Vector3.Zero;
+            BoundingRadius = 0f;
+            foreach (Triangle t in Triangles)
+            {
+                foreach (Vector3 v in t.Vertices)
+                {
+                    BoundingCenter += v / nVertices;
+                }
+            }
+            foreach (Triangle t in Triangles)
+            {
+                foreach (Vector3 v in t.Vertices)
+                {
+                    float distance = (v - BoundingCenter).Length();
+                    if (distance > BoundingRadius)
+                    {
+                        BoundingRadius = distance;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set the list of <c>Triangle</c> of this <c>Model</c> with a given
+        /// list.
+        /// </summary>
+        /// <param name="triangles">A list of <c>Triangle</c>.</param>
+        public void SetTriangles(List<Triangle> triangles)
+        {
+            Triangles = triangles;
+            ComputeBoundingSphere();
         }
     }
 }

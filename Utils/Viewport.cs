@@ -1,16 +1,20 @@
-﻿namespace RasterizationRenderer.Utils
+﻿using System.Numerics;
+
+namespace RasterizationRenderer.Utils
 {
     public class Viewport
     {
         public float DistanceToCamera { get; private set; }
         public float Width { get; private set; }
         public float Height { get; private set; }
+        public List<Plane> ClippingPlanes { get; private set; }
 
-        public Viewport(float distanceToCamera, float width, float height)
+        public Viewport(float distanceToCamera, float width, float height, List<Plane> clippingPlanes)
         {
             DistanceToCamera = distanceToCamera;
             Width = width;
             Height = height;
+            ClippingPlanes = clippingPlanes;
         }
     }
 }
