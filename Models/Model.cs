@@ -76,7 +76,7 @@ namespace RasterizationRenderer.Models
         /// Compute the properties (center and radius) of the sphere that completely contains
         /// this <c>Model</c>.
         /// </summary>
-        protected void ComputeBoundingSphere()
+        public void ComputeBoundingSphere()
         {
             int nVertices = 3 * Triangles.Count;
             BoundingCenter = Vector3.Zero;
