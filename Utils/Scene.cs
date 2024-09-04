@@ -4,15 +4,15 @@ namespace RasterizationRenderer.Utils
 {
     public class Scene
     {
-        private readonly string _name;
-        private readonly Viewport _viewport;
-        private readonly List<Entity> _entities;
+        public string Name { get; private set; }
+        public Viewport Viewport { get; private set; }
+        public List<Entity> Entities { get; private set; }
 
         public Scene(string name, Viewport viewport, List<Entity> entities)
         {
-            _name = name;
-            _viewport = viewport;
-            _entities = entities;
+            Name = name;
+            Viewport = viewport;
+            Entities = entities;
         }
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace RasterizationRenderer.Utils
         /// <param name="entity">The new entity.</param>
         public void AddEntity(Entity entity)
         {
-            _entities.Add(entity);
+            Entities.Add(entity);
         }
 
         /// <summary>
