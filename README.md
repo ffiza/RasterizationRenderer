@@ -20,7 +20,7 @@ This project is inspired by the book *Computer Graphics from Scratch* by Gabriel
 ### Future
 
 - [x] Implement camera clipping.
-- [ ] Implement the removal of hidden surfaces.
+- [x] Implement the removal of hidden surfaces.
 - [ ] Add shading for entity colors.
 - [ ] Add textures for entities.
 - [ ] Add primitives other than cubes.
