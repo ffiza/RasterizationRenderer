@@ -10,11 +10,24 @@ namespace RasterizationRenderer.Utils
     {
         public Vector3[] Vertices { get; private set; }
         public Color Color { get; private set; }
+        public Vector3 Normal { get; private set; }
 
         public Triangle(Vector3 p0, Vector3 p1, Vector3 p2, Color color)
         {
             Vertices = new Vector3[3] { p0, p1, p2 };
             Color = color;
+            ComputeNormal();
+        }
+
+        /// <summary>
+        /// Compute the normal of this triangle using the vectors from vertex 0 to vertex 1
+        /// and from vertex 0 to vertex 2.
+        /// </summary>
+        private void ComputeNormal()
+        {
+            Normal = Vector3.Cross(Vertices[1] - Vertices[0], Vertices[2] - Vertices[0]);
+        }
+
         }
 
         /// <summary>
