@@ -28,6 +28,14 @@ namespace RasterizationRenderer.Utils
             Normal = Vector3.Cross(Vertices[1] - Vertices[0], Vertices[2] - Vertices[0]);
         }
 
+        /// <summary>
+        /// Return <c>true</c> if this triangle's normal faces the camera.
+        /// </summary>
+        /// <param name="direction">The world position of the camera.</param>
+        /// <returns><c>true</c> if this triangle's normal faces the camera, <c>false</c> otherwise.</returns>
+        public bool IsFrontFacing(Vector3 direction)
+        {
+            return Vector3.Dot(direction, Normal) <= 0f;
         }
 
         /// <summary>
