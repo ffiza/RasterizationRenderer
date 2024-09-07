@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using System.Numerics;
+using System.Drawing;
 
 namespace RasterizationRenderer.Utils
 {
@@ -36,10 +38,16 @@ namespace RasterizationRenderer.Utils
             {
                 foreach (Triangle triangle in entity.Model.Triangles)
                 {
-                    canvas.DrawWireframeTriangle(Coordinates.WorldToCanvas(triangle.Vertices[0], Viewport, canvas),
-                                                 Coordinates.WorldToCanvas(triangle.Vertices[1], Viewport, canvas),
-                                                 Coordinates.WorldToCanvas(triangle.Vertices[2], Viewport, canvas),
-                                                 triangle.Color);
+                    if (triangle.IsFrontFacing(triangle.Vertices[0] - Viewport.CameraPosition))
+                    {
+                        Vector2 p0 = Coordinates.WorldToCanvas(triangle.Vertices[0], Viewport, canvas);
+                        Vector2 p1 = Coordinates.WorldToCanvas(triangle.Vertices[1], Viewport, canvas);
+                        Vector2 p2 = Coordinates.WorldToCanvas(triangle.Vertices[2], Viewport, canvas);
+                        float z0 = triangle.Vertices[0].Z;
+                        float z1 = triangle.Vertices[1].Z;
+                        float z2 = triangle.Vertices[2].Z;
+                        canvas.DrawFilledTriangle(p0, p1, p2, z0, z1, z2, triangle.Color); 
+                    }
                 }
             }
         }

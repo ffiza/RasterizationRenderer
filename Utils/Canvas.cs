@@ -12,12 +12,14 @@ namespace RasterizationRenderer.Utils
 
         public int Width { get => _width; }
         public int Height { get => _height; }
+        private float[,] _depthBuffer;
 
         public Canvas(int width, int height, Color color)
         {
             _width = width;
             _height = height;
             _bmp = new Bitmap(width, height);
+            _depthBuffer = Tools.GetArrayOfFloat(_width, _height, 0f);
             Clear(color);
         }
 
@@ -126,51 +128,75 @@ namespace RasterizationRenderer.Utils
 
         /// <summary>
         /// This method draws a colored filled triangle of vertices <c>p0</c>, <c>p1</c>, and <c>p2</c>.
+        /// The values of world space z, <c>z0</c>, <c>z1</c>, and <c>z2</c> are used for depth buffering.
         /// </summary>
         /// <param name="p0">A vertex of the triangle.</param>
         /// <param name="p1">A vertex of the triangle.</param>
         /// <param name="p2">A vertex of the triangle.</param>
+        /// <param name="z0">The world space z coordinate of point <c>p0</c>.</param>
+        /// <param name="z1">The world space z coordinate of point <c>p1</c>.</param>
+        /// <param name="z2">The world space z coordinate of point <c>p2</c>.</param>
         /// <param name="color">The color of the triangle.</param>
-        public void DrawFilledTriangle(Vector2 p0, Vector2 p1, Vector2 p2, Color color)
+        public void DrawFilledTriangle(Vector2 p0, Vector2 p1, Vector2 p2, float z0, float z1, float z2, Color color)
         {
             // Order vertices from bottom (p0) to top (p2).
-            if (p1.Y < p0.Y) { (p0, p1) = (p1, p0); }
-            if (p2.Y < p0.Y) { (p2, p0) = (p0, p2); }
-            if (p2.Y < p1.Y) { (p2, p1) = (p1, p2); }
+            if (p1.Y < p0.Y) { (p0, p1) = (p1, p0); (z0, z1) = (z1, z0); }
+            if (p2.Y < p0.Y) { (p2, p0) = (p0, p2); (z2, z0) = (z0, z2); }
+            if (p2.Y < p1.Y) { (p2, p1) = (p1, p2); (z2, z1) = (z1, z2); }
 
-            // Compute values of x for the three sides of the triangle.
+            // Compute values for the three sides of the triangle.
             List<float> x01 = Interpolator.Interpolate((int)p0.Y, p0.X, (int)p1.Y, p1.X);
             List<float> x12 = Interpolator.Interpolate((int)p1.Y, p1.X, (int)p2.Y, p2.X);
             List<float> x02 = Interpolator.Interpolate((int)p0.Y, p0.X, (int)p2.Y, p2.X);
 
-            // Remove repeated value in x01.
-            x01.RemoveAt(x01.Count - 1);
+            List<float> z01 = Interpolator.Interpolate((int)p0.Y, z0, (int)p1.Y, z1);
+            List<float> z12 = Interpolator.Interpolate((int)p1.Y, z1, (int)p2.Y, z2);
+            List<float> z02 = Interpolator.Interpolate((int)p0.Y, z0, (int)p2.Y, z2);
 
-            // Concatenate lists to find the x values of the long side of the triangle.
+            // Remove repeated value.
+            x01.RemoveAt(x01.Count - 1);
+            z01.RemoveAt(z01.Count - 1);
+
+            // Concatenate lists to find the values of the long side of the triangle.
             List<float> x012 = (x01.Concat(x12)).ToList();
+            List<float> z012 = (z01.Concat(z12)).ToList();
 
             // Determine which is the left side and which is the right side by comparing
-            // the x values at the middle height.
+            // the values at the middle height.
             List<float> xLeft, xRight;
+            List<float> zLeft, zRight;
             int m = (int)MathF.Floor(x012.Count / 2);
             if (x02[m] < x012[m])
             {
                 xLeft = x02;
                 xRight = x012;
+                zLeft = z02;
+                zRight = z012;
             }
             else
             {
                 xLeft = x012;
                 xRight = x02;
+                zLeft = z012;
+                zRight = z02;
             }
 
             // Draw all the lines. This part does not use the DrawLine method because
             // all are horizontal lines.
             for (int y = (int)p0.Y;  y <= p2.Y; y++)
             {
-                for (int x = (int)xLeft[y - (int)p0.Y]; x <= xRight[y - (int)p0.Y]; x++)
+                int xLeftPoint = (int)xLeft[y - (int)p0.Y];
+                int xRightPoint = (int)xRight[y - (int)p0.Y];
+                List<float> zSegment = Interpolator.Interpolate(xLeftPoint, zLeft[y - (int)p0.Y], xRightPoint, zRight[y - (int)p0.Y]);
+                for (int x = xLeftPoint; x <= xRightPoint; x++)
                 {
-                    PutPixel(x, y, color);
+                    float z = zSegment[x - xLeftPoint];
+                    (float bufferX, float bufferY) = Coordinates.Transform(x, y, this);
+                    if (1 / z > _depthBuffer[(int)bufferX, (int)bufferY])
+                    {
+                        PutPixel(x, y, color);
+                        _depthBuffer[(int)bufferX, (int)bufferY] = 1 / z;
+                    }
                 }
             }
         }
