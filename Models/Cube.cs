@@ -13,18 +13,18 @@ namespace RasterizationRenderer.Models
         {
             Name = "Cube";
 
-            Triangles.Add(new Triangle(new Vector3(1f, 1f, 1f), new Vector3(-1f, 1f, 1f), new Vector3(-1f, -1f, 1f), color));
-            Triangles.Add(new Triangle(new Vector3(1f, 1f, 1f), new Vector3(-1f, -1f, 1f), new Vector3(1f, -1f, 1f), color));
-            Triangles.Add(new Triangle(new Vector3(1f, 1f, -1f), new Vector3(1f, 1f, 1f), new Vector3(1f, -1f, 1f), color));
-            Triangles.Add(new Triangle(new Vector3(1f, 1f, -1f), new Vector3(1f, -1f, 1f), new Vector3(1f, -1f, -1f), color));
-            Triangles.Add(new Triangle(new Vector3(-1f, 1f, -1f), new Vector3(1f, 1f, -1f), new Vector3(1f, -1f, -1f), color));
-            Triangles.Add(new Triangle(new Vector3(-1f, 1f, -1f), new Vector3(1f, -1f, -1f), new Vector3(-1f, -1f, -1f), color));
-            Triangles.Add(new Triangle(new Vector3(-1f, 1f, 1f), new Vector3(-1f, 1f, -1f), new Vector3(-1f, -1f, -1f), color));
-            Triangles.Add(new Triangle(new Vector3(-1f, 1f, 1f), new Vector3(-1f, -1f, -1f), new Vector3(-1f, -1f, 1f), color));
-            Triangles.Add(new Triangle(new Vector3(1f, 1f, -1f), new Vector3(-1f, 1f, -1f), new Vector3(-1f, 1f, 1f), color));
-            Triangles.Add(new Triangle(new Vector3(1f, 1f, -1f), new Vector3(-1f, 1f, 1f), new Vector3(1f, 1f, 1f), color));
-            Triangles.Add(new Triangle(new Vector3(-1f, -1f, 1f), new Vector3(-1f, -1f, -1f), new Vector3(1f, -1f, -1f), color));
-            Triangles.Add(new Triangle(new Vector3(-1f, -1f, 1f), new Vector3(1f, -1f, -1f), new Vector3(1f, -1f, 1f), color));
+            Triangles.Add(new Triangle(new Vector3(1f, 1f, 1f), new Vector3(-1f, 1f, 1f), new Vector3(-1f, -1f, 1f), Color.SeaShell));
+            Triangles.Add(new Triangle(new Vector3(1f, 1f, 1f), new Vector3(-1f, -1f, 1f), new Vector3(1f, -1f, 1f), Color.RebeccaPurple));
+            Triangles.Add(new Triangle(new Vector3(1f, 1f, -1f), new Vector3(1f, 1f, 1f), new Vector3(1f, -1f, 1f), Color.SpringGreen));
+            Triangles.Add(new Triangle(new Vector3(1f, 1f, -1f), new Vector3(1f, -1f, 1f), new Vector3(1f, -1f, -1f), Color.Yellow));
+            Triangles.Add(new Triangle(new Vector3(-1f, 1f, -1f), new Vector3(1f, 1f, -1f), new Vector3(1f, -1f, -1f), Color.Crimson));
+            Triangles.Add(new Triangle(new Vector3(-1f, 1f, -1f), new Vector3(1f, -1f, -1f), new Vector3(-1f, -1f, -1f), Color.Salmon));
+            Triangles.Add(new Triangle(new Vector3(-1f, 1f, 1f), new Vector3(-1f, 1f, -1f), new Vector3(-1f, -1f, -1f), Color.AliceBlue));
+            Triangles.Add(new Triangle(new Vector3(-1f, 1f, 1f), new Vector3(-1f, -1f, -1f), new Vector3(-1f, -1f, 1f), Color.BlueViolet));
+            Triangles.Add(new Triangle(new Vector3(1f, 1f, -1f), new Vector3(-1f, 1f, -1f), new Vector3(-1f, 1f, 1f), Color.Peru));
+            Triangles.Add(new Triangle(new Vector3(1f, 1f, -1f), new Vector3(-1f, 1f, 1f), new Vector3(1f, 1f, 1f), Color.Pink));
+            Triangles.Add(new Triangle(new Vector3(-1f, -1f, 1f), new Vector3(-1f, -1f, -1f), new Vector3(1f, -1f, -1f), Color.Purple));
+            Triangles.Add(new Triangle(new Vector3(-1f, -1f, 1f), new Vector3(1f, -1f, -1f), new Vector3(1f, -1f, 1f), Color.Green));
         }
     }
 }
